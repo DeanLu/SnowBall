@@ -6,6 +6,9 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     private Transform m_ButtonPrefab = null;
 
+    [SerializeField]
+    private Canvas m_Canvas = null;
+
     public static MainMenuManager Instance
     {
         get
