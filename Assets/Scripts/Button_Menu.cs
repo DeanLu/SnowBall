@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(Button))]
 [RequireComponent(typeof(Rigidbody))]
 public class Button_Menu : MonoBehaviour
 {
+    public bool IsUsing { get { return this.gameObject.activeInHierarchy; } }
+
     [SerializeField]
     private GameObject m_ButtonMesh = null;
 
@@ -26,8 +29,6 @@ public class Button_Menu : MonoBehaviour
         mButton = this.GetComponent<Button>();
         mRigidbody = this.GetComponent<Rigidbody>();
 
-        mButton.onClick.AddListener(this.OnButtonClick);
-
         if (m_ButtonMesh != null)
             mOriScale = m_ButtonMesh.transform.localScale;
     }
@@ -38,14 +39,30 @@ public class Button_Menu : MonoBehaviour
             m_ButtonMesh.transform.localScale = new Vector3(mRectTrans.rect.width, mRectTrans.rect.height, mOriScale.z);
     }
 
-    void OnDestroy()
-    {
-        mButton.onClick.RemoveAllListeners();
-    }
-
     #endregion
 
     #region 公開方法
+
+    public void SetButtonRectInfo(float _xRatio, float _yRatio, float _width, float _height)
+    {
+        mRectTrans.localRotation = Quaternion.identity;
+        mRectTrans.localScale = Vector3.one;
+
+        int screenX = Screen.width;
+        int screenY = Screen.height;
+
+        mRectTrans.localPosition = new Vector3(screenX * _xRatio, screenY * _yRatio, 0f);
+
+        mRectTrans.sizeDelta = new Vector2(_width, _height);
+    }
+
+    public void SetButtonAction(UnityAction _action)
+    {
+        mButton.onClick.RemoveAllListeners();
+
+        mButton.onClick.AddListener(_action);
+        mButton.onClick.AddListener(this.OnButtonClick);
+    }
 
     public void SetButtonActive(bool _active)
     {
