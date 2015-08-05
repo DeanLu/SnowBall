@@ -47,7 +47,7 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
-    private Button_Menu CreateButton(string _name, float _xRatio, float _yRatio, float _width, float _height)
+    private Button_Menu CreateButton(string _name, float _xRatio, float _yRatio, float _widthRatio, float _heightRatio)
     {
         Button_Menu button = null;
 
@@ -68,7 +68,8 @@ public class UIManager : MonoBehaviour
 
         button.transform.SetParent(m_Canvas.transform);
         button.SetButtonName(_name);
-        button.SetButtonRectInfo(_xRatio, _yRatio, _width, _height);
+        button.SetButtonRectInfo(_xRatio, _yRatio, _widthRatio, _heightRatio);
+        button.SetButtonActive(true);
 
         return button;
     }
@@ -76,12 +77,12 @@ public class UIManager : MonoBehaviour
     //主畫面
     private void CreateMainMenu()
     {
-        var but01 = CreateButton("開始遊戲", 0f, 0f, 250f, 150f);
+        var but01 = CreateButton("開始遊戲", 0f, 0f, 0.4f, 0.35f);
         
-        var but02 = CreateButton("選項", 0.25f, -0.1f, 120f, 100f);
+        var but02 = CreateButton("選項", 0.35f, -0.1f, 0.25f, 0.25f);
         
-        var but03 = CreateButton("工作人員", -0.25f, -0.1f, 120f, 100f);
-        
-        var but04 = CreateButton("離開", 0f, -0.35f, 250f, 100f);
+        var but03 = CreateButton("工作人員", -0.35f, -0.1f, 0.25f, 0.25f);
+
+        var but04 = CreateButton("離開", 0f, -0.35f, 0.2f, 0.2f);
     }
 }
