@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class UIManager : MonoBehaviour
+public sealed partial class UIManager : MonoBehaviour
 {
     [SerializeField]
     private Transform m_ButtonPrefab = null;
@@ -25,9 +25,6 @@ public class UIManager : MonoBehaviour
     public emMainMenuStatus MenuStatus { get { return mMenuStatus; } }
     private emMainMenuStatus mMenuStatus = emMainMenuStatus.None;
 
-    //元件控管
-    private List<Button_Menu> mButtonList = new List<Button_Menu>();
-
     #region Mono
 
     void Awake()
@@ -37,7 +34,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        CreateMainMenu();
+        StartCoroutine(Test_Co());
     }
 
     void OnDestroy()
@@ -47,42 +44,21 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
-    private Button_Menu CreateButton(string _name, float _xRatio, float _yRatio, float _widthRatio, float _heightRatio)
+    private IEnumerator Test_Co()
     {
-        Button_Menu button = null;
-
-        for (int i = 0; i < mButtonList.Count; i++)
+        while (true)
         {
-            if (!mButtonList[i].IsUsing)
+            CreateMainMenu();
+
+            yield return new WaitForSeconds(3f);
+
+            foreach (var button in mButtonList)
             {
-                button = mButtonList[i];
-                break;
+                if (button.IsUsing)
+                    button.SetMoveStatus(MenuItemBase.emMoveStatus.Out);
             }
+
+            yield return new WaitForSeconds(3f);
         }
-
-        if (button == null)
-        {
-            button = GameObject.Instantiate(m_ButtonPrefab).GetComponent<Button_Menu>();
-            mButtonList.Add(button);
-        }
-
-        button.transform.SetParent(m_Canvas.transform);
-        button.SetButtonName(_name);
-        button.SetButtonRectInfo(_xRatio, _yRatio, _widthRatio, _heightRatio);
-        button.SetButtonActive(true);
-
-        return button;
-    }
-
-    //主畫面
-    private void CreateMainMenu()
-    {
-        var but01 = CreateButton("開始遊戲", 0f, 0f, 0.4f, 0.35f);
-        
-        var but02 = CreateButton("選項", 0.35f, -0.1f, 0.25f, 0.25f);
-        
-        var but03 = CreateButton("工作人員", -0.35f, -0.1f, 0.25f, 0.25f);
-
-        var but04 = CreateButton("離開", 0f, -0.35f, 0.2f, 0.2f);
     }
 }
