@@ -1,12 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(RectTransform))]
+[RequireComponent(typeof(Rigidbody))]
 public abstract class MenuItemBase : MonoBehaviour
 {
     public bool IsUsing { get { return this.gameObject.activeInHierarchy; } }
 
     public emMoveStatus MoveStatus { get; private set; }
+
+    public UnityAction HitAction = null;
+
+    public Rigidbody Rigid { get; private set; }
 
     protected RectTransform mRectTrans = null;
 
@@ -24,6 +30,7 @@ public abstract class MenuItemBase : MonoBehaviour
     protected virtual void Awake()
     {
         mRectTrans = this.GetComponent<RectTransform>();
+        Rigid = this.GetComponent<Rigidbody>();
     }
 
     protected virtual void Update()
@@ -102,8 +109,6 @@ public abstract class MenuItemBase : MonoBehaviour
                 Free();
                 break;
         }
-
-        Dean.Log("Set Move Status : " + MoveStatus);
     }
 
     #endregion
@@ -120,6 +125,8 @@ public abstract class MenuItemBase : MonoBehaviour
 
     protected virtual void In()
     {
+        Rigid.isKinematic = true;
+        Rigid.useGravity = false;
         this.gameObject.SetActive(true);
         mRectTrans.localPosition = mOutPos;
         mFinalPos = mInPos;
@@ -128,11 +135,12 @@ public abstract class MenuItemBase : MonoBehaviour
     protected virtual void Out()
     {
         mFinalPos = mOutPos;
+        HitAction = null;
     }
 
     protected virtual void Free()
-    { 
-        
+    {
+        Rigid.isKinematic = false;
     }
 
     #region 資料結構

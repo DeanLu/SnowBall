@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Button))]
-[RequireComponent(typeof(Rigidbody))]
+
 public class Menu_Button : MenuItemBase
 {
     [SerializeField]
@@ -14,7 +14,6 @@ public class Menu_Button : MenuItemBase
     private Text m_ButtonText = null;
 
     private Button mButton = null;
-    private Rigidbody mRigidbody = null;
 
     #region Mono
 
@@ -23,7 +22,6 @@ public class Menu_Button : MenuItemBase
         base.Awake();
 
         mButton = this.GetComponent<Button>();
-        mRigidbody = this.GetComponent<Rigidbody>();
 
         if (m_ButtonMesh != null)
             mOriScale = m_ButtonMesh.transform.localScale;
@@ -43,8 +41,6 @@ public class Menu_Button : MenuItemBase
 
     protected override void Free()
     {
-        mRigidbody.isKinematic = false;
-
         base.Free();
     }
 
@@ -56,7 +52,6 @@ public class Menu_Button : MenuItemBase
     protected override void In()
     {
         mButton.interactable = true;
-        mRigidbody.isKinematic = true;
 
         base.In();
     }
@@ -66,6 +61,7 @@ public class Menu_Button : MenuItemBase
         base.Out();
 
         mButton.interactable = false;
+        mButton.onClick.RemoveAllListeners();
     }
 
     protected override void Stay()
@@ -79,7 +75,6 @@ public class Menu_Button : MenuItemBase
 
     public void SetButtonAction(UnityAction _action)
     {
-        mButton.onClick.RemoveAllListeners();
         mButton.onClick.AddListener(_action);
     }
 
@@ -89,6 +84,11 @@ public class Menu_Button : MenuItemBase
             m_ButtonText.text = _name;
         else
             Dean.Log("沒有設定按鈕Text物件");
+    }
+
+    public void ButtonInactive()
+    {
+        mButton.interactable = false;
     }
 
     #endregion

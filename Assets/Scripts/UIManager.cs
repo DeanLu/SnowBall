@@ -10,6 +10,12 @@ public sealed partial class UIManager : MonoBehaviour
     [SerializeField]
     private Canvas m_Canvas = null;
 
+    [SerializeField]
+    private UISnowBall m_SnowBallPrefab = null;
+
+    [SerializeField]
+    private List<Transform> m_SnowBallFirePos;
+
     public static UIManager Instance
     {
         get
@@ -34,7 +40,7 @@ public sealed partial class UIManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(Test_Co());
+        CreateMainMenu();
     }
 
     void OnDestroy()
@@ -43,22 +49,4 @@ public sealed partial class UIManager : MonoBehaviour
     }
 
     #endregion
-
-    private IEnumerator Test_Co()
-    {
-        while (true)
-        {
-            CreateMainMenu();
-
-            yield return new WaitForSeconds(3f);
-
-            foreach (var button in mButtonList)
-            {
-                if (button.IsUsing)
-                    button.SetMoveStatus(MenuItemBase.emMoveStatus.Out);
-            }
-
-            yield return new WaitForSeconds(3f);
-        }
-    }
 }
