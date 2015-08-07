@@ -111,6 +111,11 @@ public abstract class MenuItemBase : MonoBehaviour
         }
     }
 
+    public virtual void HitByBall()
+    {
+        HitAction();
+    }
+
     #endregion
 
     protected virtual void Hide()

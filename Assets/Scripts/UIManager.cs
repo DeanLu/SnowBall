@@ -40,7 +40,7 @@ public sealed partial class UIManager : MonoBehaviour
 
     void Start()
     {
-        CreateMainMenu();
+        SwitchMenuStatus(emMainMenuStatus.MainMenu);
     }
 
     void OnDestroy()

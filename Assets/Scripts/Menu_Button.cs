@@ -4,7 +4,6 @@ using System.Collections;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Button))]
-
 public class Menu_Button : MenuItemBase
 {
     [SerializeField]
@@ -14,6 +13,8 @@ public class Menu_Button : MenuItemBase
     private Text m_ButtonText = null;
 
     private Button mButton = null;
+
+    private float mRandAngSpeed { get { return Random.Range(150f, 650f); } }
 
     #region Mono
 
@@ -69,6 +70,17 @@ public class Menu_Button : MenuItemBase
         base.Stay();
     }
 
+    public override void HitByBall()
+    {
+        base.HitByBall();
+
+        Rigid.angularVelocity = new Vector3(mRandAngSpeed, mRandAngSpeed, mRandAngSpeed);
+        Rigid.velocity = new Vector3(0f, 15f, 50f);
+        Rigid.useGravity = true;
+
+        this.Invoke("Deactive", 3f);
+    }
+
     #endregion
 
     #region 公開方法
@@ -92,4 +104,9 @@ public class Menu_Button : MenuItemBase
     }
 
     #endregion
+
+    private void Deactive()
+    {
+        this.gameObject.SetActive(false);
+    }
 }

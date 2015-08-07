@@ -16,4 +16,5 @@ public enum emMainMenuStatus
     MainMenu = 1,
     Option = 2,
     Transition = 3,
+    Credit = 4,
 }

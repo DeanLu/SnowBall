@@ -14,6 +14,28 @@ public partial class UIManager
         CreateUISnowBall(_aimUI);
     }
 
+    private void SwitchMenuStatus(emMainMenuStatus _status)
+    {
+        mMenuStatus = _status;
+
+        OutAllButtons();
+
+        switch (mMenuStatus)
+        { 
+            case emMainMenuStatus.MainMenu:
+                CreateMainMenu();
+                break;
+            case emMainMenuStatus.Option:
+                CreateOptionMenu();
+                break;
+            case emMainMenuStatus.Credit:
+                CreateCreditMenu();
+                break;
+            default:
+                break;
+        }
+    }
+
     private void OutAllButtons()
     {
         foreach (var button in mButtonList)

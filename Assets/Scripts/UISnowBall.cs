@@ -30,10 +30,7 @@ public class UISnowBall : MonoBehaviour
         if (_col.gameObject == mTargetUI.gameObject)
         {
             this.gameObject.SetActive(false);
-            mTargetUI.Rigid.angularVelocity = new Vector3(mRandAngSpeed, mRandAngSpeed, mRandAngSpeed);
-            mTargetUI.Rigid.velocity = new Vector3(0f, 15f, 50f);
-            mTargetUI.Rigid.useGravity = true;
-            mTargetUI.HitAction();
+            mTargetUI.HitByBall();
         }
     }
 
@@ -46,6 +43,9 @@ public class UISnowBall : MonoBehaviour
         mTargetUI = _targetUI;
 
         mRig = this.gameObject.GetComponent<Rigidbody>();
+
+        this.gameObject.SetActive(true);
+
         mRig.angularVelocity = new Vector3(mRandAngSpeed, mRandAngSpeed, mRandAngSpeed);
     }
 
