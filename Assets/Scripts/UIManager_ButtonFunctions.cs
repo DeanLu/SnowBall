@@ -18,22 +18,31 @@ public partial class UIManager
     {
         mMenuStatus = _status;
 
-        OutAllButtons();
+        OutAllMenuItems();
+
+        if (CreateUiSet_Co != null)
+            StopCoroutine(CreateUiSet_Co);
 
         switch (mMenuStatus)
         { 
             case emMainMenuStatus.MainMenu:
-                CreateMainMenu();
+                CreateUiSet_Co = StartCoroutine(CreateMainMenu());
                 break;
             case emMainMenuStatus.Option:
-                CreateOptionMenu();
+                CreateUiSet_Co = StartCoroutine(CreateOptionMenu());
                 break;
             case emMainMenuStatus.Credit:
-                CreateCreditMenu();
+                CreateUiSet_Co = StartCoroutine(CreateCreditMenu());
                 break;
             default:
                 break;
         }
+    }
+
+    private void OutAllMenuItems()
+    {
+        OutAllButtons();
+        OutAllBoards();
     }
 
     private void OutAllButtons()
@@ -42,6 +51,15 @@ public partial class UIManager
         {
             if (button.MoveStatus == MenuItemBase.emMoveStatus.Stay || button.MoveStatus == MenuItemBase.emMoveStatus.In)
                 button.SetMoveStatus(MenuItemBase.emMoveStatus.Out);
+        }
+    }
+
+    private void OutAllBoards()
+    {
+        foreach (var board in mBoardList)
+        {
+            if (board.MoveStatus == MenuItemBase.emMoveStatus.Stay || board.MoveStatus == MenuItemBase.emMoveStatus.In)
+                board.SetMoveStatus(MenuItemBase.emMoveStatus.Out);
         }
     }
 }

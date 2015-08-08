@@ -19,9 +19,9 @@ public abstract class MenuItemBase : MonoBehaviour
     protected Vector3 mOriScale;
 
     //移動相關
-    private Vector3 mFinalPos = Vector3.zero;
-    private Vector3 mInPos = Vector3.zero;
-    private Vector3 mOutPos = Vector3.zero;
+    protected Vector3 mFinalPos = Vector3.zero;
+    protected Vector3 mInPos = Vector3.zero;
+    protected Vector3 mOutPos = Vector3.zero;
     private float mLerpFactor = 0f;
     private float mMoveSpeed = 0f;
 
@@ -67,23 +67,25 @@ public abstract class MenuItemBase : MonoBehaviour
         int screenX = Screen.width;
         int screenY = Screen.height;
 
+        mRectTrans.sizeDelta = new Vector2(screenX * _widthRatio, screenY * _heightRatio);
+
         mInPos = new Vector3(screenX * _xRatio, screenY * _yRatio, 0f);
 
         if (_xRatio == 0f)
         {
             if (_yRatio >= 0f)
-                mOutPos = new Vector3(mInPos.x, 600f, 0f);
+                mOutPos = new Vector3(mInPos.x, screenY * 0.5f + mRectTrans.sizeDelta.y, 0f);
             else
-                mOutPos = new Vector3(mInPos.x, -600f, 0f);
+                mOutPos = new Vector3(mInPos.x, -screenY * 0.5f - mRectTrans.sizeDelta.y, 0f);
         }
         else if (_xRatio < 0f)
-            mOutPos = new Vector3(-600f, mInPos.y, 0f);
+            mOutPos = new Vector3(-screenX * 0.5f - mRectTrans.sizeDelta.x, mInPos.y, 0f);
         else
-            mOutPos = new Vector3(600f, mInPos.y, 0f);
-
-        mRectTrans.sizeDelta = new Vector2(screenX * _widthRatio, screenY * _heightRatio);
+            mOutPos = new Vector3(screenX * 0.5f + mRectTrans.sizeDelta.x, mInPos.y, 0f);
 
         mMoveSpeed = Vector2.Distance(mInPos, mOutPos) * Time.deltaTime * 10;
+
+        HitAction = null;
     }
 
     public void SetMoveStatus(emMoveStatus _status)
@@ -111,7 +113,7 @@ public abstract class MenuItemBase : MonoBehaviour
         }
     }
 
-    public virtual void HitByBall()
+    public virtual void HitByBall(UISnowBall _ball)
     {
         HitAction();
     }
@@ -140,7 +142,6 @@ public abstract class MenuItemBase : MonoBehaviour
     protected virtual void Out()
     {
         mFinalPos = mOutPos;
-        HitAction = null;
     }
 
     protected virtual void Free()

@@ -7,6 +7,8 @@ public class UISnowBall : MonoBehaviour
 {
     public bool IsUsing { get { return this.gameObject.activeInHierarchy; } }
 
+    public Vector3 FirePos { get; private set; }
+
     private MenuItemBase mTargetUI = null;
 
     private float mMoveSpeed = 300f;
@@ -30,7 +32,7 @@ public class UISnowBall : MonoBehaviour
         if (_col.gameObject == mTargetUI.gameObject)
         {
             this.gameObject.SetActive(false);
-            mTargetUI.HitByBall();
+            mTargetUI.HitByBall(this);
         }
     }
 
@@ -41,6 +43,8 @@ public class UISnowBall : MonoBehaviour
     public void SetTarget(MenuItemBase _targetUI)
     {
         mTargetUI = _targetUI;
+
+        FirePos = this.transform.position;
 
         mRig = this.gameObject.GetComponent<Rigidbody>();
 

@@ -14,6 +14,9 @@ public sealed partial class UIManager : MonoBehaviour
     private UISnowBall m_SnowBallPrefab = null;
 
     [SerializeField]
+    private Menu_Board m_BoardPrefab = null;
+
+    [SerializeField]
     private List<Transform> m_SnowBallFirePos;
 
     public static UIManager Instance
