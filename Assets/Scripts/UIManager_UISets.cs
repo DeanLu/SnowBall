@@ -54,7 +54,7 @@ public partial class UIManager
     //工作人員畫面
     private IEnumerator CreateCreditMenu()
     {
-        var brd_Credit00 = CreateUIBoard("\n[介面]\n\nDean", TextAnchor.UpperCenter, 0f, 0f, 0.5f, 0.75f);
+        var brd_Credit00 = CreateUIBoard("\n[ 介面 ]\n\nDean", TextAnchor.UpperCenter, 0f, 0f, 0.5f, 0.75f);
 
         var but_Back = CreateUIButton("返回", 0f, -0.35f, 0.2f, 0.15f);
         but_Back.SetClickAction(this.InactiveAllButtons);
@@ -65,12 +65,12 @@ public partial class UIManager
         yield return new WaitForSeconds(2.5f);
 
         OutAllBoards();
-        var brd_Credit01 = CreateUIBoard("\n[AI]\n\nSigma", TextAnchor.UpperCenter, 0f, 0f, 0.5f, 0.75f);
+        var brd_Credit01 = CreateUIBoard("\n[ AI ]\n\nSigma", TextAnchor.UpperCenter, 0f, 0f, 0.5f, 0.75f);
 
         yield return new WaitForSeconds(2.5f);
 
         OutAllBoards();
-        var brd_Credit02 = CreateUIBoard("\n[人物控制]\n\nRoger", TextAnchor.UpperCenter, 0f, 0f, 0.5f, 0.75f);
+        var brd_Credit02 = CreateUIBoard("\n[ 人物控制 ]\n\nRoger", TextAnchor.UpperCenter, 0f, 0f, 0.5f, 0.75f);
 
         yield return new WaitForSeconds(2.5f);
 
