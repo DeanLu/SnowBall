@@ -33,6 +33,7 @@ public class UISnowBall : MonoBehaviour
         {
             this.gameObject.SetActive(false);
             mTargetUI.HitByBall(this);
+            UIManager.Instance.CreateUIParticle(this.transform.position, 3.5f);
         }
     }
 

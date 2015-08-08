@@ -13,7 +13,10 @@ public partial class UIManager
     //Board板元件
     private List<Menu_Board> mBoardList = new List<Menu_Board>();
 
-    private Menu_Button CreateUIButton(string _name, float _xRatio, float _yRatio, float _widthRatio, float _heightRatio)
+    //粒子特效
+    private List<UIParticle> mParticleList = new List<UIParticle>();
+
+    public Menu_Button CreateUIButton(string _name, float _xRatio, float _yRatio, float _widthRatio, float _heightRatio)
     {
         Menu_Button button = null;
 
@@ -40,7 +43,7 @@ public partial class UIManager
         return button;
     }
 
-    private UISnowBall CreateUISnowBall(MenuItemBase _targetUI)
+    public UISnowBall CreateUISnowBall(MenuItemBase _targetUI)
     {
         UISnowBall snowBall = null;
 
@@ -66,7 +69,7 @@ public partial class UIManager
         return snowBall;
     }
 
-    private Menu_Board CreateUIBoard(string _text, TextAnchor _aligment, float _xRatio, float _yRatio, float _widthRatio, float _heightRatio)
+    public Menu_Board CreateUIBoard(string _text, TextAnchor _aligment, float _xRatio, float _yRatio, float _widthRatio, float _heightRatio)
     {
         Menu_Board board = null;
 
@@ -92,5 +95,31 @@ public partial class UIManager
         board.SetMoveStatus(MenuItemBase.emMoveStatus.In);
 
         return board;
+    }
+
+    public UIParticle CreateUIParticle(Vector3 _position, float _lifeTime)
+    {
+        UIParticle particle = null;
+
+        for (int i = 0; i < mParticleList.Count; i++)
+        {
+            if (!mParticleList[i].IsUsing)
+            {
+                particle = mParticleList[i];
+                break;
+            }
+        }
+
+        if (particle == null)
+        {
+            particle = GameObject.Instantiate(m_UIParticle).GetComponent<UIParticle>();
+            mParticleList.Add(particle);
+        }
+
+        particle.transform.SetParent(m_Canvas.transform);
+        particle.transform.position = _position;
+        particle.Init(_lifeTime);
+
+        return particle;
     }
 }
