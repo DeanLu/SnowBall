@@ -44,7 +44,6 @@ public class SnowBall : MonoBehaviour {
 		mRecycleFunc = _method;
 	}
 
-
 	void OnCollisionEnter(Collision collision) 
 	{
 		if(mOwner == null)
@@ -70,6 +69,10 @@ public class SnowBall : MonoBehaviour {
 		}
 		else if(mOwner != collision.gameObject)
 		{
+			Debug.Log("xxx");
+			SnowBallAI ai = collision.gameObject.GetComponent<SnowBallAI>();
+			if(ai != null) ai.SetHurt();
+
 			if(mRecycleFunc != null)
 			{
 				mRecycleFunc(this);

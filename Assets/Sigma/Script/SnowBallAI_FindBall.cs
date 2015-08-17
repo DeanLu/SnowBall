@@ -14,7 +14,7 @@ public partial class SnowBallAI
 	{
 		if (IsHoldBall() == true)
 		{
-			ChangeAiState(AiState.PATROL);
+			ChangeAiState(AiState.TRACE);
 		}
 		else if (IsArrival() == true)
 		{
@@ -31,12 +31,11 @@ public partial class SnowBallAI
 	{
 		if(SnowballFactory.Instance != null)
 		{
-			Debug.Log("SnowballFactory");
-			FindPatrolPoint(SnowballFactory.Instance.RandBallPt.position);
+			mAgent.SetDestination (SnowballFactory.Instance.RandBallPt.position);
 		}
 		else
 		{
-			FindPatrolPoint(this.transform.position);
+			FindPatrolPoint(this.transform.position, 5F);
 		}
 	}
 }

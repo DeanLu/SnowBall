@@ -5,7 +5,7 @@ public partial class SnowBallAI
 {
 	void OnPatrolBegin()
 	{
-		FindPatrolPoint(this.transform.position);
+		FindPatrolPoint(this.transform.position, 5F);
 	}
 
 	void OnPatrolUpdate()
@@ -25,22 +25,19 @@ public partial class SnowBallAI
 	{
 		if (mAgent == null)
 			return false;
-		
+
 		return (mAgent.pathStatus == NavMeshPathStatus.PathComplete) && (mAgent.remainingDistance <= 1F);
 	}
 
-	void FindPatrolPoint(Vector3 _patrol)
-	{
-		float range = 5F;
-		
+	void FindPatrolPoint(Vector3 _patrol, float _range)
+	{		
 		int searchMax = 30;
 		
 		for (var i = 0; i < searchMax; i++) 
 		{
-			Vector3 randomPoint = _patrol + Random.insideUnitSphere * range;
+			Vector3 randomPoint = _patrol + Random.insideUnitSphere * _range;
 			NavMeshHit hit;
 			if (NavMesh.SamplePosition (randomPoint, out hit, 1F, 0xFF)) {
-				
 				mAgent.SetDestination (hit.position);
 				return;
 			}

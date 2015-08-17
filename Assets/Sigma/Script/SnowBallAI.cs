@@ -20,7 +20,19 @@ public partial class SnowBallAI : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{	
+		if (mRigidbody != null)
+			mRigidbody.isKinematic = true;
+
+		InitialEvent ();
+
+		RegisterMine ();
+
 		ChangeAiState(AiState.FIND_BALL);
+	}
+
+	void OnDestroy () 
+	{
+		ReleaseEvent ();
 	}
 	
 	// Update is called once per frame
@@ -39,6 +51,10 @@ public partial class SnowBallAI : MonoBehaviour
 		case AiState.FIND_BALL:
 			OnFindBallUpdate();
 			break;
+
+		case AiState.TRACE:
+			OnTraceUpdate();
+			break;
 		}
 	}
 
@@ -47,5 +63,26 @@ public partial class SnowBallAI : MonoBehaviour
 		if(mPoint == null) return false;
 
 		return mPoint.IsHoldBall;
+	}
+
+	void InitialEvent()
+	{
+		SnowBalManager.Event_SnowBalManagerCompleted += RegisterMine;
+	}
+
+	void ReleaseEvent()
+	{
+		SnowBalManager.Event_SnowBalManagerCompleted -= RegisterMine;
+	}
+
+	void RegisterMine()
+	{
+		if (SnowBalManager.Instance != null)
+			SnowBalManager.Instance.RegisterAI (this.gameObject);
+	}
+
+	public void SetHurt()
+	{
+		ChangeAiState(AiState.HURT);
 	}
 }

@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SnowballFactory : MonoBehaviour {
 
 	[SerializeField]
 	Transform[] mBallPts = null;
 	public Transform[] BallPts { get { return mBallPts; } }
-	public Transform RandBallPt { get { return mBallPts[Random.Range(0, mBallPts.Length)];} }
+	public Transform RandBallPt { get { return GetRandBall();} }
 
 	[SerializeField]
 	GameObject mBallPrefab = null;
@@ -26,6 +28,20 @@ public class SnowballFactory : MonoBehaviour {
 			}
 
 			return mTable;
+		}
+	}
+
+	Dictionary<GameObject, Transform> mBallTable = null;
+	public Dictionary<GameObject, Transform> BallTable
+	{
+		get
+		{
+			if(mBallTable == null)
+			{
+				mBallTable = new Dictionary<GameObject, Transform>();
+			}
+			
+			return mBallTable;
 		}
 	}
 
@@ -64,6 +80,8 @@ public class SnowballFactory : MonoBehaviour {
 		ball.transform.position = spawnPt.position;
 
 		++mTotalBallCount;
+
+		BallTable.Add (ball.gameObject, ball.transform);
 	}
 
 	void RecycleBall(SnowBall _ball)
@@ -71,5 +89,19 @@ public class SnowballFactory : MonoBehaviour {
 		Table.RecycleRes(_ball);
 
 		--mTotalBallCount;
+
+		BallTable.Remove (_ball.gameObject);
+	}
+
+	Transform GetRandBall()
+	{
+		int Indx = UnityEngine.Random.Range (0, mBallPts.Length);
+
+		foreach (Transform ballTrans in BallTable.Values) {
+			if(Indx == 0) return ballTrans;
+			else --Indx;
+		}
+
+		return mBallPts[UnityEngine.Random.Range(0, mBallPts.Length)];
 	}
 }

@@ -10,6 +10,7 @@ public partial class SnowBallAI
 		public const int FIND_BALL = 2;
 		public const int ATTACK = 3;
 		public const int HURT = 4;
+		public const int TRACE = 5;
 	}
 
 	public class ActState
@@ -38,6 +39,9 @@ public partial class SnowBallAI
 			OnFindBallEnd();
 			break;
 
+		case AiState.TRACE:
+			OnTraceEnd();
+			break;
 		}
 
 		mAiState = _state;
@@ -54,6 +58,10 @@ public partial class SnowBallAI
 
 		case AiState.FIND_BALL:
 			OnFindBallBegin();
+			break;
+
+		case AiState.TRACE:
+			OnTraceBegin();
 			break;
 		}
 	}

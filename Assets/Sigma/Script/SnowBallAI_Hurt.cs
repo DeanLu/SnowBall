@@ -9,7 +9,10 @@ public partial class SnowBallAI
 	{
 		if (mAgent != null) mAgent.Stop();
 
-		if (mRigidbody != null) mRigidbody.AddForce((transform.forward * -2F), ForceMode.Impulse);
+		//if (mRigidbody != null) mRigidbody.AddForce((transform.forward * -2F), ForceMode.Impulse);
+
+		//if (mRigidbody != null)
+		//	mRigidbody.isKinematic = true;
 
 		ChangeActState(ActState.HURT);
 
@@ -22,12 +25,22 @@ public partial class SnowBallAI
 
 		if (stayTimeOnHurt <= 0F)
 		{
-			ChangeAiState(AiState.PATROL);
+			if (IsHoldBall() == true)
+			{
+				ChangeAiState(AiState.TRACE);
+			}
+			else
+			{
+				ChangeAiState(AiState.FIND_BALL);
+			}	
 		}	
 	}
 	
 	void OnHurtEnd()
 	{
+		//if (mRigidbody != null)
+		//	mRigidbody.isKinematic = false;
+
 		if (mAgent != null) mAgent.Resume();
 	}
 }

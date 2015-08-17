@@ -28,10 +28,21 @@ public class SnowBallPoint : MonoBehaviour
 
 		mBall.transform.parent = null;
 
-		mBall.Translate(_dir * 1.5F, Space.World);
+		mBall.Translate(_dir, Space.World);
+
+		Collider collider = mBall.GetComponent<Collider>();
+		if(collider != null)
+		{
+			collider.enabled = true;
+		}
 
 		Rigidbody rigibody = mBall.GetComponent<Rigidbody>();
-		if(rigibody != null) rigibody.AddForce(_dir * 2F, ForceMode.Force);
+		if(rigibody != null) 
+		{
+			rigibody.useGravity = false;
+			rigibody.constraints = RigidbodyConstraints.FreezeRotation;
+			rigibody.AddForce(_dir * 20F, ForceMode.Force);
+		}
 
 		mBall = null;
 	}
