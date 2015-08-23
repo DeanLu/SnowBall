@@ -37,6 +37,13 @@ public sealed partial class UIManager : MonoBehaviour
     public emMainMenuStatus MenuStatus { get { return mMenuStatus; } }
     private emMainMenuStatus mMenuStatus = emMainMenuStatus.None;
 
+    #region 參數
+
+    public bool Option_Sound { get; private set; }
+    public bool Option_Music { get; private set; }
+
+    #endregion
+
     #region Mono
 
     void Awake()

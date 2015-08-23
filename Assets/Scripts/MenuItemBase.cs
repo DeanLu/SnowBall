@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(Rigidbody))]
@@ -10,7 +11,7 @@ public abstract class MenuItemBase : MonoBehaviour
 
     public emMoveStatus MoveStatus { get; private set; }
 
-    public UnityAction HitAction = null;
+    public List<UnityAction> HitActions = new List<UnityAction>();
 
     public Rigidbody Rigid { get; private set; }
 
@@ -23,7 +24,7 @@ public abstract class MenuItemBase : MonoBehaviour
     protected Vector3 mInPos = Vector3.zero;
     protected Vector3 mOutPos = Vector3.zero;
     private float mLerpFactor = 0f;
-    private float mMoveSpeed = 0f;
+    private float mMoveSpeed = 100f;
 
     #region Mono
 
@@ -73,19 +74,19 @@ public abstract class MenuItemBase : MonoBehaviour
 
         if (_xRatio == 0f)
         {
-            if (_yRatio >= 0f)
+            //if (_yRatio >= 0f)
                 mOutPos = new Vector3(mInPos.x, screenY * 0.5f + mRectTrans.sizeDelta.y, 0f);
-            else
-                mOutPos = new Vector3(mInPos.x, -screenY * 0.5f - mRectTrans.sizeDelta.y, 0f);
+           /* else
+                mOutPos = new Vector3(mInPos.x, -screenY * 0.5f - mRectTrans.sizeDelta.y, 0f);*/
         }
         else if (_xRatio < 0f)
             mOutPos = new Vector3(-screenX * 0.5f - mRectTrans.sizeDelta.x, mInPos.y, 0f);
         else
             mOutPos = new Vector3(screenX * 0.5f + mRectTrans.sizeDelta.x, mInPos.y, 0f);
 
-        mMoveSpeed = Vector2.Distance(mInPos, mOutPos) * Time.deltaTime * 10;
+        //mMoveSpeed = Vector2.Distance(mInPos, mOutPos) * Time.deltaTime * 10;
 
-        HitAction = null;
+        HitActions.Clear();
     }
 
     public void SetMoveStatus(emMoveStatus _status)
@@ -115,7 +116,10 @@ public abstract class MenuItemBase : MonoBehaviour
 
     public virtual void HitByBall(UISnowBall _ball)
     {
-        HitAction();
+        for (int i = 0; i < HitActions.Count; i++)
+        {
+            HitActions[i]();
+        }
     }
 
     #endregion

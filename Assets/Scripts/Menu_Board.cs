@@ -28,7 +28,7 @@ public class Menu_Board : MenuItemBase
     {
         base.In();
 
-        mRectTrans.localPosition = mOutPos + new Vector3(0f, 0f, 50f);
+        mRectTrans.localPosition = mOutPos + new Vector3(0f, 0f, 100f);
     }
 
     #endregion

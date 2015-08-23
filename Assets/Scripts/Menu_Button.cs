@@ -54,6 +54,8 @@ public class Menu_Button : MenuItemBase
         mButton.interactable = true;
 
         base.In();
+
+        mRectTrans.localPosition = mOutPos + new Vector3(0f, 0f, 50f);
     }
 
     protected override void Out()
@@ -72,6 +74,9 @@ public class Menu_Button : MenuItemBase
     public override void HitByBall(UISnowBall _ball)
     {
         base.HitByBall(_ball);
+
+        if (MoveStatus != emMoveStatus.Free)
+            return;
 
         Vector3 forceDir = (this.transform.position - _ball.FirePos).normalized;
 
@@ -94,15 +99,20 @@ public class Menu_Button : MenuItemBase
     public void SetButtonInfo(string _name)
     {
         if (m_ButtonText != null)
-        {
             m_ButtonText.text = _name;
-            m_ButtonText.fontSize = (int)(mRectTrans.rect.width * 0.15f);
-        }
         else
             Dean.Log("沒有設定按鈕Text物件");
 
         if (m_ButtonMesh != null)
             m_ButtonMesh.transform.localScale = new Vector3(mRectTrans.rect.width, mRectTrans.rect.height, mOriScale.z);
+    }
+
+    public void SetButtonString(string _string)
+    {
+        if (m_ButtonText != null)
+            m_ButtonText.text = _string;
+        else
+            Dean.Log("沒有設定按鈕Text物件");
     }
 
     public void ButtonInactive()
