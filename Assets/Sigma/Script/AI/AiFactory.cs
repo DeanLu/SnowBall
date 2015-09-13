@@ -12,6 +12,8 @@ public class AiParam
 	public GameObject Owner { get; set; }
 	public Animator Anim { get; set; }
 	public NavMeshAgent NavAgent { get; set; }
+	public Collider OwnerCollider { get; set; }
+	public Rigidbody OwnerRigidbody { get; set; }
 
 	public float WaitTime { get; set; }
 	public float Weight { get; set; }

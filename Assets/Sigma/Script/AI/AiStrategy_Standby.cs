@@ -3,6 +3,8 @@ using System.Collections;
 
 public class AiStrategy_Standby : AiStrategy 
 {	
+	const float JUMP_FORCE = 0.2F;
+
 	public override void OnUpdate(ref AiParam _param)
 	{
 		if (_param == null)
@@ -13,6 +15,11 @@ public class AiStrategy_Standby : AiStrategy
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 
 		_param.Vec3Target = Camera.main.transform.position + ray.direction * 0.5F;
+
+		if(IsGround(ref _param) == true)
+		{
+			DoJump(ref _param);
+		}
 	}
 	
 	public override void OnAnimatorIK(ref AiParam _param)
@@ -35,8 +42,10 @@ public class AiStrategy_Standby : AiStrategy
 	
 	public override void OnEnter(ref AiParam _param)
 	{
-		if (_param == null || _param.NavAgent == null)
+		if (_param == null)
 			return;
+
+		if (_param.NavAgent != null) _param.NavAgent.enabled = false;
 
 		_param.OnAiActionChanged (UnityChan_Ctrl.ActionState.Idle);
 	}
@@ -45,6 +54,16 @@ public class AiStrategy_Standby : AiStrategy
 	{
 		if (_param == null || _param.NavAgent == null)
 			return;
+
+		_param.NavAgent.enabled = true;
+	}
+
+	void DoJump(ref AiParam _param)
+	{
+		if (_param == null || _param.OwnerRigidbody == null)
+			return;
+
+		_param.OwnerRigidbody.AddForce(Vector3.up * JUMP_FORCE, ForceMode.Impulse);
 	}
 }
 

@@ -55,13 +55,19 @@ public class AiStrategy
 
 	protected bool IsAhead(ref AiParam _param, Vector3 _targetPt)
 	{
-		if(_param.Owner.transform == null) return false;
+		if(_param.Owner == null) return false;
 		return 0F < Vector3.Dot (_param.Owner.transform.forward, _targetPt - _param.Owner.transform.position);
 	}
 	
 	protected bool IsRightSide(ref AiParam _param, Vector3 _targetPt)
 	{
-		if(_param.Owner.transform == null) return false;
+		if(_param.Owner == null) return false;
 		return 0 < Vector3.Cross (_param.Owner.transform.forward, _targetPt - _param.Owner.transform.position).y;
+	}
+
+	protected bool IsGround(ref AiParam _param)
+	{
+		if(_param.Owner == null || _param.OwnerCollider == null) return false;
+		return Physics.Raycast(_param.Owner.transform.transform.position, -Vector3.up, _param.OwnerCollider.bounds.extents.y + 0.1F);
 	}
 }

@@ -38,7 +38,7 @@ public class AiStrategy_GoBack : AiStrategy
 		
 		_param.NavAgent.Resume ();
 
-		Vector3 home = Camera.main.transform.position + (Camera.main.transform.forward * 1F);
+		Vector3 home = Camera.main.transform.position + (Camera.main.transform.forward * 0.25F);
 
 		_param.NavAgent.SetDestination (home);
 	}
