@@ -22,6 +22,7 @@ public class AiStrategy_CatchBall : AiStrategy
 			{
 				GameObject.Destroy(_param.ObjTarget);
 				_param.ObjTarget = null;
+				_param.HandBall.SetActive(true);
 				_param.OnAiStrategyChanged(AiFactory.AiStrategyType.GoBack);		
 			}
 			else if(IsArrival(ref _param) == true) _param.NavAgent.SetDestination (_param.ObjTarget.transform.position);
@@ -61,7 +62,8 @@ public class AiStrategy_CatchBall : AiStrategy
 
 		_param.OnAiActionChanged (UnityChan_Ctrl.ActionState.Run);
 
-		_param.NavAgent.Resume ();
+		//_param.NavAgent.Resume ();
+		Movement (ref _param);
 		_param.NavAgent.SetDestination (_param.ObjTarget.transform.position);
 	}
 	
@@ -70,7 +72,8 @@ public class AiStrategy_CatchBall : AiStrategy
 		if (_param == null || _param.NavAgent == null)
 			return;
 		
-		_param.NavAgent.Stop ();
+		//_param.NavAgent.Stop ();
+		Stop (ref _param);
 
 		if(_param.ObjTarget != null) _param.Vec3Target = _param.ObjTarget.transform.position;
 		else                         _param.Vec3Target = _param.Owner.transform.position + _param.Owner.transform.forward * CATCHABLE_DISTANCE;

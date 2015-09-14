@@ -36,9 +36,10 @@ public class AiStrategy_GoBack : AiStrategy
 		if (_param == null || _param.NavAgent == null)
 			return;
 		
-		_param.NavAgent.Resume ();
+		//_param.NavAgent.Resume ();
+		Movement (ref _param);
 
-		Vector3 home = Camera.main.transform.position + (Camera.main.transform.forward * 0.25F);
+		Vector3 home = Camera.main.transform.position + (Camera.main.transform.forward * 1F);
 
 		_param.NavAgent.SetDestination (home);
 	}
@@ -48,7 +49,10 @@ public class AiStrategy_GoBack : AiStrategy
 		if (_param == null || _param.NavAgent == null)
 			return;
 		
-		_param.NavAgent.Stop ();
+		//_param.NavAgent.Stop ();
+		Stop (ref _param);
+
+		_param.HandBall.SetActive(false);
 
 		_param.Vec3Target = Camera.main.transform.position;
 	}

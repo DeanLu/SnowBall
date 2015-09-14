@@ -38,7 +38,8 @@ public class AiStrategy_Patrol : AiStrategy
 
 		_param.OnAiActionChanged (UnityChan_Ctrl.ActionState.Walk);
 
-		_param.NavAgent.Resume ();
+		//_param.NavAgent.Resume ();
+		Movement (ref _param);
 
 		int searchMax = 30;
 		
@@ -63,7 +64,8 @@ public class AiStrategy_Patrol : AiStrategy
 		if (_param == null || _param.NavAgent == null)
 			return;
 
-		_param.NavAgent.Stop ();
+		//_param.NavAgent.Stop ();
+		Stop (ref _param);
 
 		_param.Vec3Target = _param.Owner.transform.position + _param.Owner.transform.forward * VISIBLED_RANGE;
 	}

@@ -15,6 +15,9 @@ public class UnityChan_Ctrl : MonoBehaviour
 	[SerializeField]
 	Rigidbody mRigidbody = null;
 
+	[SerializeField]
+	GameObject mHandBall = null;
+
 	AiStrategy mStrategy = null;
 
 	AiParam mParam = null;
@@ -69,6 +72,7 @@ public class UnityChan_Ctrl : MonoBehaviour
 		mParam.NavAgent = mAgent;
 		mParam.OwnerCollider = mCollider;
 		mParam.OwnerRigidbody = mRigidbody;
+		mParam.HandBall = mHandBall;
 
 		mParam.WeightIK = 0F;
 

@@ -70,4 +70,22 @@ public class AiStrategy
 		if(_param.Owner == null || _param.OwnerCollider == null) return false;
 		return Physics.Raycast(_param.Owner.transform.transform.position, -Vector3.up, _param.OwnerCollider.bounds.extents.y + 0.1F);
 	}
+
+	protected void Movement(ref AiParam _param)
+	{
+		if(_param.NavAgent != null)
+		{
+			_param.NavAgent.acceleration = 5F;
+			_param.NavAgent.Resume();
+		}
+	}
+
+	protected void Stop(ref AiParam _param)
+	{
+		if(_param.NavAgent != null)
+		{
+			_param.NavAgent.acceleration = 120F;
+			_param.NavAgent.Stop();
+		}
+	}
 }

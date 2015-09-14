@@ -3,7 +3,9 @@ using System.Collections;
 
 public class AiStrategy_Standby : AiStrategy 
 {	
-	const float JUMP_FORCE = 0.2F;
+	const float JUMP_FORCE = 1F;
+
+	GameObject mSnowBall = null;
 
 	public override void OnUpdate(ref AiParam _param)
 	{
@@ -16,10 +18,14 @@ public class AiStrategy_Standby : AiStrategy
 
 		_param.Vec3Target = Camera.main.transform.position + ray.direction * 0.5F;
 
-		if(IsGround(ref _param) == true)
+		if (mSnowBall != null) mSnowBall.transform.position = _param.Vec3Target;
+
+		/*if(IsGround(ref _param) == true)
 		{
 			DoJump(ref _param);
-		}
+		}*/
+
+		DoThrowBall(ref _param);
 	}
 	
 	public override void OnAnimatorIK(ref AiParam _param)
@@ -45,9 +51,11 @@ public class AiStrategy_Standby : AiStrategy
 		if (_param == null)
 			return;
 
-		if (_param.NavAgent != null) _param.NavAgent.enabled = false;
+		//if (_param.NavAgent != null) _param.NavAgent.enabled = false;
 
 		_param.OnAiActionChanged (UnityChan_Ctrl.ActionState.Idle);
+
+		if (mSnowBall == null) mSnowBall = GameObject.Instantiate(Resources.Load("SnowBall")) as GameObject;
 	}
 	
 	public override void OnLeave(ref AiParam _param)
@@ -55,7 +63,13 @@ public class AiStrategy_Standby : AiStrategy
 		if (_param == null || _param.NavAgent == null)
 			return;
 
-		_param.NavAgent.enabled = true;
+		//_param.NavAgent.enabled = true;
+
+		if (mSnowBall != null)
+		{
+			GameObject.Destroy(mSnowBall);
+			mSnowBall = null;
+		}
 	}
 
 	void DoJump(ref AiParam _param)
@@ -64,6 +78,28 @@ public class AiStrategy_Standby : AiStrategy
 			return;
 
 		_param.OwnerRigidbody.AddForce(Vector3.up * JUMP_FORCE, ForceMode.Impulse);
+	}
+
+	void DoThrowBall(ref AiParam _param)
+	{
+		if (_param == null)
+			return;
+
+		if (Input.GetMouseButtonUp (0) == false)
+			return;
+
+		if (mSnowBall != null)
+		{
+			mSnowBall.transform.Translate(Camera.main.transform.forward * 1F, Space.World);
+			_param.ObjTarget = mSnowBall;
+
+			Rigidbody rigidbody = mSnowBall.GetComponent<Rigidbody>();
+			if (rigidbody != null) rigidbody.AddForce(Camera.main.transform.forward * 1F + Camera.main.transform.up, ForceMode.Impulse);
+
+			mSnowBall = null;
+		}
+
+		_param.OnAiStrategyChanged(AiFactory.AiStrategyType.CatchBall);
 	}
 }
 
