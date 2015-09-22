@@ -14,10 +14,7 @@ public class Paint : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		
-		GameObject obj = GameObject.Find ("xxx");
-		if(obj != null) Debug.Log("Find Obj");
-	
+			
 		Clear (mRenderTex, mMatPen);
 	}
 	
@@ -78,21 +75,7 @@ public class Paint : MonoBehaviour {
 		_canvas.MarkRestoreExpected ();
 		Graphics.SetRenderTarget(_canvas);
 		
-		GL.LoadOrtho();
-		
-		GL.Begin(GL.QUADS);
-		
-		_brush.SetPass (1);
-		
-		GL.Vertex3(0, 0, 0);
-		
-		GL.Vertex3(0, 1, 0);
-		
-		GL.Vertex3(1, 1, 0);
-		
-		GL.Vertex3(1, 0, 0);
-		
-		GL.End();
+		GL.Clear(false, true, Color.clear);
 		
 		Graphics.SetRenderTarget(null);
 	}
