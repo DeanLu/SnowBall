@@ -27,6 +27,9 @@ public class AiParam
 	public AiStrategyChangedMethod OnAiStrategyChanged { get; set; }
 	public AiActionChangedMethod OnAiActionChanged { get; set; }
 	public AiEmotionChangedMethod OnAiEmotionChanged { get; set; }
+
+	public bool HoldBall { set { if(HandBall != null) HandBall.SetActive(value); } }
+	public bool HasHoldBall { get { if(HandBall == null) return false; return HandBall.activeSelf; } }
 }
 
 public class AiFactory
@@ -38,8 +41,13 @@ public class AiFactory
 		CatchBall,
 		Fight,
 		Die,
+
+
+		DemoIK,
 		GoBack,
 		Standby,
+
+
 	}
 
 	static Dictionary<AiStrategyType, AiStrategy> mTable = null;
@@ -74,6 +82,14 @@ public class AiFactory
 
 			case AiStrategyType.CatchBall:
 				strategy = new AiStrategy_CatchBall();
+				break;
+
+			case AiStrategyType.Fight:
+				strategy = new AiStrategy_Fight();
+				break;
+
+			case AiStrategyType.DemoIK:
+				strategy = new AiStrategy_DemoIK();
 				break;
 
 			case AiStrategyType.GoBack:

@@ -18,6 +18,9 @@ public class UnityChan_Ctrl : MonoBehaviour
 	[SerializeField]
 	GameObject mHandBall = null;
 
+	[SerializeField]
+	AiFactory.AiStrategyType mCurStrategy = AiFactory.AiStrategyType.Idle;
+
 	AiStrategy mStrategy = null;
 
 	AiParam mParam = null;
@@ -82,7 +85,7 @@ public class UnityChan_Ctrl : MonoBehaviour
 		mParam.OnAiActionChanged = OnAiActionChanged;
 		mParam.OnAiEmotionChanged = OnAiEmotionChanged;
 
-		OnAiStrategyChanged (AiFactory.AiStrategyType.Idle);
+		OnAiStrategyChanged (mCurStrategy);
 	}
 
 	void OnAiStrategyChanged(AiFactory.AiStrategyType _type)
@@ -92,10 +95,12 @@ public class UnityChan_Ctrl : MonoBehaviour
 
 		mStrategy = AiFactory.GetAiStrategy (_type);
 
-		if (mStrategy != null)
+		if (mStrategy != null) 
+		{
 			mStrategy.OnEnter (ref mParam);
 
-		Debug.Log ("AiStrategy = " + _type.ToString());
+			mCurStrategy = _type;
+		}
 	}
 
 	void OnAiActionChanged(ActionState _state)

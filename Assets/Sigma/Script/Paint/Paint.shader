@@ -9,7 +9,7 @@
 		Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
 		ZTest Always
 		ZWrite Off
-		Blend SrcAlpha OneMinusSrcAlpha 
+		Blend One One 
 		LOD 100
 
 		Pass {

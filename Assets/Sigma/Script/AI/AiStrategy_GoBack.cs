@@ -52,7 +52,7 @@ public class AiStrategy_GoBack : AiStrategy
 		//_param.NavAgent.Stop ();
 		Stop (ref _param);
 
-		_param.HandBall.SetActive(false);
+		_param.HoldBall = false;
 
 		_param.Vec3Target = Camera.main.transform.position;
 	}

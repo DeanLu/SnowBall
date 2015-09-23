@@ -12,7 +12,7 @@ public class AiStrategy_Patrol : AiStrategy
 
 		DecreasingIK (ref _param);	
 
-		if(IsFindTarget(ref _param) == true) _param.OnAiStrategyChanged(AiFactory.AiStrategyType.CatchBall);
+		if(IsFindTarget(ref _param) == true) _param.OnAiStrategyChanged(_param.HasHoldBall ? AiFactory.AiStrategyType.Fight : AiFactory.AiStrategyType.CatchBall);
 		else if(IsArrival(ref _param) == true) _param.OnAiStrategyChanged(AiFactory.AiStrategyType.Idle);
 			
 	}
@@ -74,11 +74,13 @@ public class AiStrategy_Patrol : AiStrategy
 	{
 		if (_param == null)
 			return false;
+
+		int targetLayer = _param.HasHoldBall ? PLAYER_LAYER : FREE_BALL_LAYER;
 		
 		Ray ray = new Ray (_param.Owner.transform.position, _param.Owner.transform.forward);
 				
 		RaycastHit hitInfo;
-		if (Physics.SphereCast(ray, 1F, out hitInfo, VISIBLED_RANGE, FREE_BALL_LAYER))
+		if (Physics.SphereCast(ray, 1F, out hitInfo, VISIBLED_RANGE, targetLayer))
 		{
 			_param.ObjTarget = hitInfo.collider.gameObject;
 			return true;

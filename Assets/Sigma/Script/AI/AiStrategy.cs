@@ -4,6 +4,7 @@ using System.Collections;
 public class AiStrategy 
 {
 	protected readonly int FREE_BALL_LAYER = 1 << LayerMask.NameToLayer("FreeBall");
+	protected readonly int PLAYER_LAYER = 1 << LayerMask.NameToLayer("Player");
 
 	public virtual void OnUpdate(ref AiParam _param)
 	{

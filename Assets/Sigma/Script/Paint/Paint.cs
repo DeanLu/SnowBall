@@ -46,6 +46,8 @@ public class Paint : MonoBehaviour {
 		
 		_canvas.MarkRestoreExpected ();
 		Graphics.SetRenderTarget(_canvas);
+
+		GL.PushMatrix();
 		
 		GL.LoadOrtho();
 		
@@ -66,6 +68,8 @@ public class Paint : MonoBehaviour {
 		GL.Vertex3(_posX + halfSize, _posY - halfSize, 0);
 		
 		GL.End();
+
+		GL.PopMatrix();
 		
 		Graphics.SetRenderTarget(null);
 	}

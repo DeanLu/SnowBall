@@ -56,6 +56,7 @@ public class AiStrategy_Standby : AiStrategy
 		_param.OnAiActionChanged (UnityChan_Ctrl.ActionState.Idle);
 
 		if (mSnowBall == null) mSnowBall = GameObject.Instantiate(Resources.Load("SnowBall")) as GameObject;
+		if (mSnowBall != null) mSnowBall.name = "FreeBall";
 	}
 	
 	public override void OnLeave(ref AiParam _param)
@@ -99,7 +100,7 @@ public class AiStrategy_Standby : AiStrategy
 			mSnowBall = null;
 		}
 
-		_param.OnAiStrategyChanged(AiFactory.AiStrategyType.CatchBall);
+		_param.OnAiStrategyChanged(AiFactory.AiStrategyType.DemoIK);
 	}
 }
 
