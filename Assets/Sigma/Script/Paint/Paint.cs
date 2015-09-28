@@ -54,19 +54,20 @@ public class Paint : MonoBehaviour {
 		GL.Begin(GL.QUADS);
 		
 		_brush.SetPass (0);
-		
+
 		GL.TexCoord(new Vector3(0, 0, 0));
 		GL.Vertex3(_posX - halfSize, _posY - halfSize, 0);
-		
+
 		GL.TexCoord(new Vector3(0, 1, 0));
 		GL.Vertex3(_posX - halfSize, _posY + halfSize, 0);
-		
+
 		GL.TexCoord(new Vector3(1, 1, 0));
 		GL.Vertex3(_posX + halfSize, _posY + halfSize, 0);
-		
+
 		GL.TexCoord(new Vector3(1, 0, 0));
 		GL.Vertex3(_posX + halfSize, _posY - halfSize, 0);
-		
+
+
 		GL.End();
 
 		GL.PopMatrix();
