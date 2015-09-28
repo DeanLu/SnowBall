@@ -47,7 +47,7 @@ public class AiFactory
 		GoBack,
 		Standby,
 
-
+		Paint,
 	}
 
 	static Dictionary<AiStrategyType, AiStrategy> mTable = null;
@@ -98,6 +98,10 @@ public class AiFactory
 
 			case AiStrategyType.Standby:
 				strategy = new AiStrategy_Standby();
+				break;
+
+			case AiStrategyType.Paint:
+				strategy = new UnityChan_Paint();
 				break;
 
 			default:
