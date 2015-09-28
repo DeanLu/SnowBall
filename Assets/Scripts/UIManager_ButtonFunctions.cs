@@ -18,10 +18,10 @@ public partial class UIManager
     {
         mMenuStatus = _status;
 
-        OutAllMenuItems();
-
         if (CreateUiSet_Co != null)
             StopCoroutine(CreateUiSet_Co);
+
+        OutAllMenuItems();
 
         switch (mMenuStatus)
         { 
@@ -33,6 +33,9 @@ public partial class UIManager
                 break;
             case emMainMenuStatus.Credit:
                 CreateUiSet_Co = StartCoroutine(CreateCreditMenu());
+                break;
+            case emMainMenuStatus.Loading:
+                CreateUiSet_Co = StartCoroutine(CreateLoadingMenu());
                 break;
             default:
                 break;

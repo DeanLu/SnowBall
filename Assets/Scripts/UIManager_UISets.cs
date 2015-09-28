@@ -14,7 +14,7 @@ public partial class UIManager
         but_Start.SetClickAction(this.InactiveAllButtons);
         but_Start.SetClickAction(delegate { but_Start.SetMoveStatus(MenuItemBase.emMoveStatus.Free); });
         but_Start.SetClickAction(delegate { this.ThrowSnowBall(but_Start); });
-        but_Start.HitActions.Add(this.OutAllButtons);
+        but_Start.HitActions.Add(delegate { this.SwitchMenuStatus(emMainMenuStatus.Loading); });
 
         var but_Option = CreateUIButton("OPTION", 0f, -0.1f, 0.3f, 0.125f);
         but_Option.SetClickAction(this.InactiveAllButtons);
@@ -32,7 +32,7 @@ public partial class UIManager
         but_Exit.SetClickAction(this.InactiveAllButtons);
         but_Exit.SetClickAction(delegate { but_Exit.SetMoveStatus(MenuItemBase.emMoveStatus.Free); });
         but_Exit.SetClickAction(delegate { this.ThrowSnowBall(but_Exit); });
-        but_Exit.HitActions.Add(this.OutAllButtons);
+        but_Exit.HitActions.Add(this.OutAllMenuItems);
 
         yield break;
     }
@@ -85,5 +85,58 @@ public partial class UIManager
         SwitchMenuStatus(emMainMenuStatus.MainMenu);
 
         yield break;
+    }
+
+    //Loading畫面
+    private IEnumerator CreateLoadingMenu()
+    {
+        while (true)
+        {
+            int usingButtons = 0;
+
+            for (int i = 0; i < mButtonList.Count; i++)
+            {
+                var moveState = mButtonList[i].MoveStatus;
+                if (moveState == MenuItemBase.emMoveStatus.Stay || moveState == MenuItemBase.emMoveStatus.In)
+                    ++usingButtons;
+            }
+
+            if (usingButtons == 0)
+            {
+                var but_L = CreateUIButton("L", -0.35f, -0.025f, 0.1f, 0.15f);
+                but_L.SetClickAction(delegate { but_L.SetMoveStatus(MenuItemBase.emMoveStatus.Free); });
+                but_L.SetClickAction(delegate { this.ThrowSnowBall(but_L); });
+
+                var but_O = CreateUIButton("o", -0.25f, -0.01f, 0.1f, 0.15f);
+                but_O.SetClickAction(delegate { but_O.SetMoveStatus(MenuItemBase.emMoveStatus.Free); });
+                but_O.SetClickAction(delegate { this.ThrowSnowBall(but_O); });
+
+                var but_A = CreateUIButton("a", -0.15f, -0.015f, 0.1f, 0.15f);
+                but_A.SetClickAction(delegate { but_A.SetMoveStatus(MenuItemBase.emMoveStatus.Free); });
+                but_A.SetClickAction(delegate { this.ThrowSnowBall(but_A); });
+
+                var but_D = CreateUIButton("d", -0.05f, -0.035f, 0.1f, 0.15f);
+                but_D.SetClickAction(delegate { but_D.SetMoveStatus(MenuItemBase.emMoveStatus.Free); });
+                but_D.SetClickAction(delegate { this.ThrowSnowBall(but_D); });
+
+                var but_I = CreateUIButton("i", 0.05f, -0.025f, 0.1f, 0.15f);
+                but_I.SetClickAction(delegate { but_I.SetMoveStatus(MenuItemBase.emMoveStatus.Free); });
+                but_I.SetClickAction(delegate { this.ThrowSnowBall(but_I); });
+
+                var but_N = CreateUIButton("n", 0.15f, -0.015f, 0.1f, 0.15f);
+                but_N.SetClickAction(delegate { but_N.SetMoveStatus(MenuItemBase.emMoveStatus.Free); });
+                but_N.SetClickAction(delegate { this.ThrowSnowBall(but_N); });
+
+                var but_G = CreateUIButton("g", 0.25f, -0.01f, 0.1f, 0.15f);
+                but_G.SetClickAction(delegate { but_G.SetMoveStatus(MenuItemBase.emMoveStatus.Free); });
+                but_G.SetClickAction(delegate { this.ThrowSnowBall(but_G); });
+
+                var but_end = CreateUIButton("...", 0.35f, -0.05f, 0.1f, 0.15f);
+                but_end.SetClickAction(delegate { but_end.SetMoveStatus(MenuItemBase.emMoveStatus.Free); });
+                but_end.SetClickAction(delegate { this.ThrowSnowBall(but_end); });
+            }
+
+            yield return null;
+        }
     }
 }

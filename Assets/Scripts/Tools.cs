@@ -11,10 +11,11 @@ public static class Dean
 }
 
 public enum emMainMenuStatus
-{ 
+{
     None = 0,
     MainMenu = 1,
     Option = 2,
     Transition = 3,
     Credit = 4,
+    Loading = 5,
 }
