@@ -39,34 +39,30 @@ public class PaintTool : MonoBehaviour
 		//_canvas.MarkRestoreExpected ();
 		Graphics.SetRenderTarget(_canvas);
 		
-		//GL.PushMatrix();
+		GL.PushMatrix();
+
+		mMatPen.SetPass (0);
 		
 		GL.LoadOrtho();
 		//GL.LoadIdentity();
 		
 		GL.Begin(GL.QUADS);
 		
-		mMatPen.SetPass (0);
-		
 		GL.TexCoord(new Vector3(0, 0, 0));
-		//GL.Vertex3(_posX - halfSize, _posY - halfSize, 0);
-		GL.Vertex3(0, 0, 0);
+		GL.Vertex3(_posX - halfSize, _posY - halfSize, 0);
 		
 		GL.TexCoord(new Vector3(0, 1, 0));
-		//GL.Vertex3(_posX - halfSize, _posY + halfSize, 0);
-		GL.Vertex3(0, 1, 0);
+		GL.Vertex3(_posX - halfSize, _posY + halfSize, 0);
 		
 		GL.TexCoord(new Vector3(1, 1, 0));
-		//GL.Vertex3(_posX + halfSize, _posY + halfSize, 0);
-		GL.Vertex3(1, 1, 0);
+		GL.Vertex3(_posX + halfSize, _posY + halfSize, 0);
 		
 		GL.TexCoord(new Vector3(1, 0, 0));
-		//GL.Vertex3(_posX + halfSize, _posY - halfSize, 0);
-		GL.Vertex3(1, 0, 0);
+		GL.Vertex3(_posX + halfSize, _posY - halfSize, 0);
 		
 		GL.End();
 		
-		//GL.PopMatrix();
+		GL.PopMatrix();
 		
 		Graphics.SetRenderTarget(null);
 	}

@@ -23,13 +23,13 @@ public class PaintWall : MonoBehaviour
 				//Debug.Log("contact.point1 = " + contact.point.ToString());
 				Vector3 localPos = this.transform.InverseTransformPoint(contact.point);
 				//Debug.Log("localPos1 = " + localPos.ToString());
-				localPos.x = transform.localScale.x == 0F ? 0F : (localPos.x + 0.5F) / Mathf.Abs(transform.localScale.x);
-				localPos.y = transform.localScale.y == 0F ? 0F : (localPos.y + 0.5F) / Mathf.Abs(transform.localScale.y);
-				Debug.Log("localPos2 = " + localPos.ToString());
+				localPos.x += 0.5F;
+				localPos.y += 0.5F;
+				//Debug.Log("localPos2 = " + localPos.ToString());
 				float brushSize = (transform.localScale.x + transform.localScale.y) / 2F;
 				//Debug.Log("brushSize1 = " + brushSize.ToString());
 				brushSize = brushSize == 0F ? 0.001F : 0.3F / Mathf.Abs(brushSize);
-				Debug.Log("brushSize2 = " + brushSize.ToString());
+				//Debug.Log("brushSize2 = " + brushSize.ToString());
 				PaintTool.Instance.PaintTexture(mPaintTexture, 0.3F, localPos.x, localPos.y);
 			}
 

@@ -9,7 +9,7 @@ public class UnityChan_Paint : AiStrategy
 	{
 		if (_param == null)
 			return;
-		
+
 		DecreasingIK (ref _param);
 
 		_param.WaitTime -= Time.deltaTime;
@@ -58,7 +58,7 @@ public class UnityChan_Paint : AiStrategy
 	{
 		if (_param == null || _param.Owner == null)
 			return;
-		
+
 		GameObject snowBall = GameObject.Instantiate(Resources.Load("SnowBall")) as GameObject;
 		if (snowBall == null) return;
 

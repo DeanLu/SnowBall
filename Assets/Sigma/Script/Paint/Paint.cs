@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Paint : MonoBehaviour {
@@ -48,12 +48,13 @@ public class Paint : MonoBehaviour {
 		Graphics.SetRenderTarget(_canvas);
 
 		GL.PushMatrix();
+
+		_brush.SetPass (0);
 		
 		GL.LoadOrtho();
 		
-		GL.Begin(GL.QUADS);
-		
-		_brush.SetPass (0);
+		GL.Begin(GL.QUADS);		
+
 
 		GL.TexCoord(new Vector3(0, 0, 0));
 		GL.Vertex3(_posX - halfSize, _posY - halfSize, 0);
