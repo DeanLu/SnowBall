@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.Events;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(Rigidbody))]
@@ -60,31 +61,21 @@ public abstract class MenuItemBase : MonoBehaviour
 
     #region 公開方法
 
-    public virtual void SetRectInfo(float _xRatio, float _yRatio, float _widthRatio, float _heightRatio)
+    public virtual void SetRectInfo(float _xPos, float _yPos, float _width, float _height)
     {
         mRectTrans.localRotation = Quaternion.identity;
         mRectTrans.localScale = Vector3.one;
 
-        int screenX = Screen.width;
-        int screenY = Screen.height;
+        mRectTrans.sizeDelta = new Vector2(_width, _height);
 
-        mRectTrans.sizeDelta = new Vector2(screenX * _widthRatio, screenY * _heightRatio);
+        mInPos = new Vector3(_xPos, _yPos, 0f);
 
-        mInPos = new Vector3(screenX * _xRatio, screenY * _yRatio, 0f);
-
-        if (_xRatio == 0f)
-        {
-            //if (_yRatio >= 0f)
-                mOutPos = new Vector3(mInPos.x, screenY * 0.5f + mRectTrans.sizeDelta.y, 0f);
-           /* else
-                mOutPos = new Vector3(mInPos.x, -screenY * 0.5f - mRectTrans.sizeDelta.y, 0f);*/
-        }
-        else if (_xRatio < 0f)
-            mOutPos = new Vector3(-screenX * 0.5f - mRectTrans.sizeDelta.x, mInPos.y, 0f);
+        if (_xPos == 0f)
+            mOutPos = new Vector3(mInPos.x, UIManager.FIXED_HEIGHT * 0.5f + mRectTrans.sizeDelta.y, 0f);
+        else if (_xPos < 0f)
+            mOutPos = new Vector3(-UIManager.FIXED_WIDTH - mRectTrans.sizeDelta.x, mInPos.y, 0f);
         else
-            mOutPos = new Vector3(screenX * 0.5f + mRectTrans.sizeDelta.x, mInPos.y, 0f);
-
-        //mMoveSpeed = Vector2.Distance(mInPos, mOutPos) * Time.deltaTime * 10;
+            mOutPos = new Vector3(UIManager.FIXED_WIDTH + mRectTrans.sizeDelta.x, mInPos.y, 0f);
 
         HitActions.Clear();
     }

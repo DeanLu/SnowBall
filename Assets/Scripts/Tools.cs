@@ -18,4 +18,6 @@ public enum emMainMenuStatus
     Transition = 3,
     Credit = 4,
     Loading = 5,
+    Game = 6,
+    GameOption = 7,
 }

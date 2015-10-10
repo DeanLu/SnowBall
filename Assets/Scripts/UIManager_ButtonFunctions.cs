@@ -37,6 +37,12 @@ public partial class UIManager
             case emMainMenuStatus.Loading:
                 CreateUiSet_Co = StartCoroutine(CreateLoadingMenu());
                 break;
+            case emMainMenuStatus.Game:
+                CreateUiSet_Co = StartCoroutine(CreateGameUI());
+                break;
+            case emMainMenuStatus.GameOption:
+                CreateUiSet_Co = StartCoroutine(CreateGamePause());
+                break;
             default:
                 break;
         }

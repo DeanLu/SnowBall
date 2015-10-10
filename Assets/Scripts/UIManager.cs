@@ -39,6 +39,9 @@ public sealed partial class UIManager : MonoBehaviour
 
     #region 參數
 
+    public const float FIXED_WIDTH = 1080f;
+    public const float FIXED_HEIGHT = 1920f;
+
     public bool Option_Sound { get; private set; }
     public bool Option_Music { get; private set; }
 
