@@ -173,11 +173,15 @@ public partial class UIManager
 
         var but_Back = CreateUIButton("Resume", -200f, -350f, 300f, 120f);
         but_Back.SetClickAction(this.InactiveAllButtons);
-        but_Back.SetClickAction(delegate { this.SwitchMenuStatus(emMainMenuStatus.Game); });
+        but_Back.SetClickAction(delegate { but_Back.SetMoveStatus(MenuItemBase.emMoveStatus.Free); });
+        but_Back.SetClickAction(delegate { this.ThrowSnowBall(but_Back); });
+        but_Back.HitActions.Add(delegate { this.SwitchMenuStatus(emMainMenuStatus.Game); });
 
         var but_Quit = CreateUIButton("Quit", 200f, -350f, 300f, 120f);
         but_Quit.SetClickAction(this.InactiveAllButtons);
-        but_Quit.SetClickAction(delegate { this.SwitchMenuStatus(emMainMenuStatus.MainMenu); });
+        but_Quit.SetClickAction(delegate { but_Quit.SetMoveStatus(MenuItemBase.emMoveStatus.Free); });
+        but_Quit.SetClickAction(delegate { this.ThrowSnowBall(but_Quit); });
+        but_Quit.HitActions.Add(delegate { this.SwitchMenuStatus(emMainMenuStatus.MainMenu); });
 
         yield break;
     }

@@ -77,6 +77,8 @@ public abstract class MenuItemBase : MonoBehaviour
         else
             mOutPos = new Vector3(UIManager.FIXED_WIDTH + mRectTrans.sizeDelta.x, mInPos.y, 0f);
 
+        mMoveSpeed = Vector3.Distance(mOutPos, mInPos) * mMoveSpeed;
+
         HitActions.Clear();
     }
 
