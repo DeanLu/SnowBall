@@ -15,6 +15,7 @@ public class AiParam
 	public Collider OwnerCollider { get; set; }
 	public Rigidbody OwnerRigidbody { get; set; }
 	public GameObject HandBall { get; set; }
+	public int Team { get; set; }
 
 	public float WaitTime { get; set; }
 	public float Weight { get; set; }
@@ -38,11 +39,11 @@ public class AiFactory
 	{
 		Idle,
 		Patrol,
-		CatchBall,
 		Fight,
 		Die,
+		Reload,
 
-
+		CatchBall,
 		DemoIK,
 		GoBack,
 		Standby,
@@ -80,12 +81,18 @@ public class AiFactory
 				strategy = new AiStrategy_Patrol();
 				break;
 
-			case AiStrategyType.CatchBall:
-				strategy = new AiStrategy_CatchBall();
-				break;
-
 			case AiStrategyType.Fight:
 				strategy = new AiStrategy_Fight();
+				break;
+
+			case AiStrategyType.Reload:
+				strategy = new AiStrategy_Reload();
+				break;
+
+
+
+			case AiStrategyType.CatchBall:
+				strategy = new AiStrategy_CatchBall();
 				break;
 
 			case AiStrategyType.DemoIK:

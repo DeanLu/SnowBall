@@ -24,6 +24,8 @@ public class MosaicPostEffect : MonoBehaviour
 
 	RenderTextureFormat mFormat = RenderTextureFormat.Default;
 
+	int mResult = 0;
+
 
 	public void Start ()
 	{
@@ -47,6 +49,26 @@ public class MosaicPostEffect : MonoBehaviour
 			mMosaicMaterial = null;
 		}
 	} 
+
+	public void Update () 
+	{
+		if(Input.GetKeyDown(KeyCode.Alpha0))
+		{
+			mResult = 0;
+		}
+		else if(Input.GetKeyDown(KeyCode.Alpha1))
+		{
+			mResult = 1;
+		}
+		else if(Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			mResult = 2;
+		}
+		else if(Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			mResult = 3;
+		}
+	}
 
 	void OnPreRender() 
 	{
@@ -112,7 +134,26 @@ public class MosaicPostEffect : MonoBehaviour
 		//Post output to screen	
 		Graphics.SetRenderTarget (null);
 
-		Graphics.Blit(outputTarget, MosaicMaterial, 4);
+		//Graphics.Blit(outputTarget, MosaicMaterial, 4);
+
+		switch(mResult)
+		{
+		case 0:
+			Graphics.Blit(outputTarget, MosaicMaterial, 4);
+			break;
+
+		case 1:
+			Graphics.Blit(mInput, MosaicMaterial, 4);
+			break;
+
+		case 2:
+			Graphics.Blit(mosaicTarget, MosaicMaterial, 4);
+			break;
+
+		case 3:
+			Graphics.Blit(filterTarget, MosaicMaterial, 4);
+			break;
+		}
 
 
 		RenderTexture.ReleaseTemporary (outputTarget);

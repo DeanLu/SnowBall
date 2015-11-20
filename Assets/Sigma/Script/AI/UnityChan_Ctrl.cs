@@ -21,6 +21,9 @@ public class UnityChan_Ctrl : MonoBehaviour
 	[SerializeField]
 	AiFactory.AiStrategyType mCurStrategy = AiFactory.AiStrategyType.Idle;
 
+	[SerializeField]
+	int mTeam = 0;
+
 	AiStrategy mStrategy = null;
 
 	AiParam mParam = null;
@@ -47,6 +50,7 @@ public class UnityChan_Ctrl : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		InitialTean ();
 		InitialAiParam ();
 	}
 	
@@ -63,6 +67,11 @@ public class UnityChan_Ctrl : MonoBehaviour
 			mStrategy.OnAnimatorIK (ref mParam);
 	}
 
+	void InitialTean()
+	{
+		this.gameObject.layer = (mTeam == 0 ? AiStrategy.PLAYER_LAYER : AiStrategy.ENEMY_LAYER);
+	}
+
 	void InitialAiParam()
 	{
 		if (mParam != null)
@@ -76,6 +85,8 @@ public class UnityChan_Ctrl : MonoBehaviour
 		mParam.OwnerCollider = mCollider;
 		mParam.OwnerRigidbody = mRigidbody;
 		mParam.HandBall = mHandBall;
+
+		mParam.Team = mTeam;
 
 		mParam.WeightIK = 0F;
 
@@ -151,5 +162,19 @@ public class UnityChan_Ctrl : MonoBehaviour
 			mAnim.SetInteger("EmotionType", 3);
 			break;
 		}
+	}
+
+	void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.CompareTag ("SnowBall") == false)
+			return;
+		
+		Destroy(collision.gameObject);
+
+		OnAiEmotionChanged (EmotionState.Damaged);
+
+		RagDoll_Unitychan.CreateRagDoll (this.transform);
+
+		this.gameObject.SetActive (false);
 	}
 }
